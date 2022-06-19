@@ -25,8 +25,9 @@ const checkLogin = async () => {
     return false;
 };
 
-const login = () => {
+const login = (event) => {
     const url = new URL(API_URL_AUTH);
+    const button = event.target;
 
     url.searchParams.append('client_id', ACCESS_KEY);
     url.searchParams.append('redirect_uri', REDIRECT_URI);
@@ -34,7 +35,8 @@ const login = () => {
     url.searchParams.append('scope', SCOPE);
 
     location.href = url;
-    button.addEventListener('click', login);
+    button.removeEventListener('click', login);
+    authorization(button);
 };
 
 const logout = (event) => {
@@ -45,6 +47,7 @@ const logout = (event) => {
         button.textContent = '';
         button.style.backgroundImage = '';
         button.removeEventListener('click', logout);
+        authorization(button);
     }
 };
 
