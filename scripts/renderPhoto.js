@@ -21,7 +21,7 @@ export const renderPhoto = (wrapper, photoData) => {
     });
 
     const authorName = createElem('span', {
-        textContent: photoData.user.name,
+        textContent: photoData.user.username,
     });
 
     author.append(authorAvatar, authorName);
@@ -33,10 +33,11 @@ export const renderPhoto = (wrapper, photoData) => {
     const likeButton = createElem('button', {
         id: photoData.id,
         className: 'photo__like',
-        textContent: photoData.likes
+        textContent: photoData.likes,
+        likedByUser: photoData.liked_by_user,
     });
 
-    if (!likeButton.likeByUser) {
+    if (!likeButton.likedByUser) {
         likeButton.classList.add('photo__like_o');
     }
 
@@ -50,4 +51,6 @@ export const renderPhoto = (wrapper, photoData) => {
     photoControl.append(likeButton, downloadButton);
 
     wrapper.append(photo, author, photoControl);
+
+    return likeButton;
 };

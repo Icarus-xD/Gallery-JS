@@ -1,10 +1,19 @@
 import { getData } from "./getData.js";
 import { renderGallery } from "./renderGallery.js";
 import { renderPhoto } from "./renderPhoto.js";
+import { authorization } from "./authorization.js";
+import { likeHandler } from "./likeHandler.js";
 
-const init = async ({galleryWrapperSelector, photoWrapperSelector}) => {
+const init = async ({
+    galleryWrapperSelector, 
+    photoWrapperSelector,
+    authButtonSelector,    
+}) => {
     const galleryWrapper = document.querySelector(galleryWrapperSelector);
     const photoWrapper = document.querySelector(photoWrapperSelector)
+    const authButton = document.querySelector(authButtonSelector);
+
+    authorization(authButton);
     
     if (galleryWrapper) {
         const photos = await getData({ count: 30 });
@@ -17,7 +26,13 @@ const init = async ({galleryWrapperSelector, photoWrapperSelector}) => {
 
         if (photoId) {
             const photo = await getData({ photoId });
-            renderPhoto(photoWrapper, photo)
+            const photoLike = renderPhoto(photoWrapper, photo);
+
+            photoLike.addEventListener('click', () => {
+                if (localStorage.getItem('Bearer')) {
+                    likeHandler(photoLike);
+                }
+            });
         }
     }
 };
@@ -25,4 +40,5 @@ const init = async ({galleryWrapperSelector, photoWrapperSelector}) => {
 init({
     galleryWrapperSelector: '.gallery__wrapper',
     photoWrapperSelector: '.photo__wrapper',
+    authButtonSelector: '.header__login-button',
 });

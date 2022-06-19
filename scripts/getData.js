@@ -13,7 +13,14 @@ export const getData = ({ count, page = 1, photoId }) => {
         url.pathname += `/${photoId}`;
     }
 
-    return fetch(url).then(response => {
-        return response.json();
-    });
+    const headers = {};
+
+    if (localStorage.getItem('Bearer')) {
+        headers.Authorization = `Bearer ${localStorage.getItem('Bearer')}`;
+    }
+
+    return fetch(url, { headers })
+        .then(response => {
+            return response.json();
+        });
 };
