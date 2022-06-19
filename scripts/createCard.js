@@ -26,20 +26,21 @@ export const createCard = async data => {
         href: `page.html?photo=${data.id}`,
     });
 
-    const photo = await loadImage(data.urls.small, data.alt_description);
+    const photo = await loadImage(data.urls.small, data.description || data.alt_description);
 
     const author = createElem('a', {
         className: 'card__author',
         href: data.user.links.html,
     });
 
-    const authorAvatar = new Image();
-    authorAvatar.className = 'author__photo';
-    authorAvatar.src = data.user.profile_image.medium;
-    authorAvatar.width = '32';
-    authorAvatar.height = '32';
-    authorAvatar.alt = data.user.bio;
-    authorAvatar.title = data.user.username;
+    const authorAvatar = createElem('img', {
+        className: 'author__photo',
+        src: data.user.profile_image.medium,
+        width: '32',
+        height: '32',
+        alt: data.user.bio,
+        title: data.user.username,
+    });
 
     author.append(authorAvatar);
 
@@ -50,7 +51,7 @@ export const createCard = async data => {
 
     const downloadLink = createElem('a', {
         className: 'card__download',
-        href: data.links.download,
+        href: data.urls.raw,
         download: true,
         target: '_blank',
     });

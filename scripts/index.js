@@ -7,14 +7,18 @@ const init = async ({galleryWrapperSelector, photoWrapperSelector}) => {
     const photoWrapper = document.querySelector(photoWrapperSelector)
     
     if (galleryWrapper) {
-        const photos = await getData();
+        const photos = await getData({ count: 30 });
         renderGallery(galleryWrapper, photos);
     }
+
     if (photoWrapper) {
         const url = new URL(location.href);
-        const photos = await getData();
-        const photo = photos.find(photo => photo.id === url.searchParams.get('photo'));
-        renderPhoto(photoWrapper, photo)
+        const photoId = url.searchParams.get('photo');
+
+        if (photoId) {
+            const photo = await getData({ photoId });
+            renderPhoto(photoWrapper, photo)
+        }
     }
 };
 

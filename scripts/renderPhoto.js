@@ -1,12 +1,11 @@
 import { createElem } from "./createElem.js";
 
 export const renderPhoto = (wrapper, photoData) => {
-    console.log('photoData: ', photoData);
 
     const photo = createElem('img', {
         className: 'photo__picture',
         src: photoData.urls.regular,
-        alt: photoData.alt_description,
+        alt: photoData.description || photoData.alt_description,
         style: 'max-height: 80vh;',
     });
 
@@ -37,10 +36,14 @@ export const renderPhoto = (wrapper, photoData) => {
         textContent: photoData.likes
     });
 
+    if (!likeButton.likeByUser) {
+        likeButton.classList.add('photo__like_o');
+    }
+
     const downloadButton = createElem('a', {
         className: 'photo__download',
         download: true,
-        href: photoData.links.download,
+        href: photoData.urls.raw,
         target: '_blank',
     });
 
