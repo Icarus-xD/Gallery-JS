@@ -4,6 +4,6 @@ export const API_URL_AUTH = 'https://unsplash.com/oauth/authorize';
 export const API_URL_TOKEN = 'https://unsplash.com/oauth/token';
 export const ACCESS_KEY = 'E-Wx71R1xawFLfx5wL0vYE1r4pzg6nCO1EoAu2dBMWw';
 export const SECRET_KEY = 'B05eNOhiuk49RTPKE1NleHvgU5BOKDYGDyQNTZRm7CM';
-export const REDIRECT_URI = 'http://127.0.0.1:5500/';
+export const REDIRECT_URI = 'https://icarus-xd.github.io/Gallery-JS/';
 export const RESPONSE_TYPE = 'code';
 export const SCOPE = 'public read_user read_photos write_likes';
